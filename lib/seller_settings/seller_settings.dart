@@ -69,7 +69,7 @@ class ButtonSettings extends StatelessWidget {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            edit_button(data: data,),
+                            EditButton(data: data,),
                             DeleteButton(data: data,),
 
                           ],

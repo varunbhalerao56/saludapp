@@ -19,8 +19,8 @@ class DeleteButton extends StatelessWidget {
       showDialog(
         context: context,
         child: AlertDialog(
-          title: Text('Are you sure you want to delete ${data.text} Link?'),
-          content: Text('Deleted links are not retrievable.'),
+          title: Text('Are you sure you want to delete ${data.text} - product?'),
+          content: Text('Deleted products cant be retrived'),
           actions: <Widget>[
             FlatButton(
               color: Colors.redAccent,

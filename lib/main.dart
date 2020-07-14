@@ -17,33 +17,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productCollection = Firestore.instance.collection('products');
-    // ignore: top_level_function_literal_block
     final product = productCollection.snapshots().map((snapshot) {
       return snapshot.documents
           .map((doc) => products.fromDocument(doc))
           .toList();
     });
     final bundlesCollection = Firestore.instance.collection('bundles');
-    // ignore: top_level_function_literal_block
     final bundle = bundlesCollection.snapshots().map((snapshot) {
       return snapshot.documents
-          .map((doc) => bundles.fromDocuments(doc))
+          .map((doc) => bundles.fromDocument(doc))
           .toList();
     });
-
     return MultiProvider(
       providers: [
         StreamProvider<List<products>>(
           create: (_) => product,
           initialData: [],
         ),
+        StreamProvider<List<bundles>>(
+          create: (_) => bundle,
+          initialData: [],
+        ),
         Provider<CollectionReference>(
           create: (_) => productCollection,
         ),
-
+        Provider<CollectionReference>(
+          create: (_) => bundlesCollection,
+        )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Salud App',
         theme: ThemeData(
           brightness: Brightness.dark,
         ),

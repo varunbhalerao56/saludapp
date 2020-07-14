@@ -35,7 +35,7 @@ class bundles {
   int get hashCode =>
       btext.hashCode ^ bimg.hashCode ^ bprice.hashCode ^ bdocumentId.hashCode;
 
-  factory bundles.fromMaps(Map<String, dynamic> map) {
+  factory bundles.fromMap(Map<String, dynamic> map) {
     return new bundles(
       btext: map['btext'] as String,
       bimg: map['bimg'] as String,
@@ -43,7 +43,7 @@ class bundles {
     );
   }
 
-  factory bundles.fromDocuments(DocumentSnapshot document) {
+  factory bundles.fromDocument(DocumentSnapshot document) {
     return new bundles(
       btext: document['btext'] as String,
       bimg: document['bimg'] as String,
@@ -52,7 +52,7 @@ class bundles {
     );
   }
 
-  Map<String, dynamic> toMaps() {
+  Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {
       'btext': this.btext,
