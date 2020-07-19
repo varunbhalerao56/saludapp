@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:saludsingapore/models/Products.dart';
+import 'package:saludsingapore/main.dart';
+
+
+
 
 class AddButton extends StatelessWidget {
   const AddButton({
@@ -11,7 +16,7 @@ class AddButton extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
-    final productCollection = Provider.of<CollectionReference>(context);
+    final productCollections = Provider.of<CollectionReference>(context) ;
       TextEditingController _productImgTextController = TextEditingController();
       TextEditingController _productNameTextController = TextEditingController();
       TextEditingController _productPriceTextController = TextEditingController();
@@ -60,7 +65,7 @@ class AddButton extends StatelessWidget {
                           img: _productImgTextController.text,
                           price: _productPriceTextController.text)
                           .toMap();
-                      productCollection.add(data);
+                      productCollections.add(data);
 
                       Navigator.of(context).pop();
                     }
@@ -97,7 +102,7 @@ class AddButton extends StatelessWidget {
 
 final databaseReference = Firestore.instance;
 void createRecordS() async {
-  await databaseReference.collection("bundles").document("6 bottle bundle").setData(
+  await Firestore.instance.collection("bundles").document("6 bottle bundle").setData(
     {
       'text': 'Tequila',
       'img':

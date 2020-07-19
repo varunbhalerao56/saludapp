@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class products {
+
   final String text;
   final String img;
   final String price;
@@ -15,6 +16,7 @@ class products {
     this.price,
     this.documentId,
   });
+
 
   @override
   String toString() {
