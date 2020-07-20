@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:saludsingapore/models/export_models.dart';
 import 'package:provider/provider.dart';
-import 'package:saludsingapore/main.dart';
-import 'package:saludsingapore/models/Products.dart';
-
+import 'package:saludsingapore/helpers/export_helper.dart';
 
 class EditButton extends StatelessWidget {
   const EditButton({
@@ -11,20 +10,20 @@ class EditButton extends StatelessWidget {
     this.data,
   }) : super(key: key);
 
-  final products data;
+  final Products data;
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _imageTextController = TextEditingController(
+    TextEditingController _productImgTextController = TextEditingController(
       text: data.img,
     );
-    TextEditingController _priceTextController = TextEditingController(
+    TextEditingController _productPriceTextController = TextEditingController(
       text: data.price,
     );
-    TextEditingController _titleTextController = TextEditingController(
+    TextEditingController _productNameTextController = TextEditingController(
       text: data.text,
     );
-    final linksCollection = Provider.of<CollectionReference>(context);
+    final linksCollection = Provider.of<ProductCollection>(context);
     final _formKey = GlobalKey<FormState>();
 
     _displayEditDialog() async {
@@ -38,33 +37,9 @@ class EditButton extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  TextFormField(
-                    validator: (value) =>
-                    value.isEmpty ? 'Please enter a Product name' : null,
-                    controller: _titleTextController,
-                    decoration: InputDecoration(
-                      hintText: "Vodka",
-                      labelText: 'Title',
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) =>
-                    value.isEmpty ? 'Please enter a url' : null,
-                    controller: _imageTextController,
-                    decoration: InputDecoration(
-                      hintText: "Img Link",
-                      labelText: 'URL',
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) =>
-                    value.isEmpty ? 'Please enter a price' : null,
-                    controller: _priceTextController,
-                    decoration: InputDecoration(
-                      hintText: "25.99",
-                      labelText: 'Price',
-                    ),
-                  ),
+                  text_input(TextController: _productNameTextController,hintText: "Vodka",labelText: 'Product Name',message: 'Please enter a product name',),
+                  text_input(TextController: _productImgTextController,hintText: "URL",labelText: 'Product Image',message: 'Please enter a product image link',),
+                  text_input(TextController: _productPriceTextController,hintText: "25.99",labelText: 'Product Price',message: 'Please enter a product price',),
                 ],
               ),
             ),
@@ -74,19 +49,19 @@ class EditButton extends StatelessWidget {
                 color: Colors.blueAccent,
                 onPressed: () {
                   final userChangedTitle =
-                      data.text != _titleTextController.text;
-                  final userChangedUrl = data.img != _imageTextController.text;
+                      data.text != _productNameTextController.text;
+                  final userChangedUrl = data.img != _productImgTextController.text;
                   final userUpdateForm = userChangedTitle || userChangedUrl;
 
                   if (_formKey.currentState.validate()) {
                     if (userUpdateForm) {
                       // If user updates the form field, send a update request to firebase
-                      final newLink = products(
-                        text: _titleTextController.text,
-                        img: _imageTextController.text,
-                        price: _imageTextController.text,
+                      final newLink = Products(
+                        text: _productNameTextController.text,
+                        img: _productImgTextController.text,
+                        price: _productPriceTextController.text,
                       );
-                      linksCollection
+                      linksCollection.collection
                           .document(data.documentId)
                           .updateData(newLink.toMap());
                     } // Else, it closes the dialog without sending a request

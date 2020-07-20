@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:saludsingapore/helpers/export_helper.dart';
+import 'package:saludsingapore/models/export_models.dart';
 import 'package:provider/provider.dart';
-import 'package:saludsingapore/main.dart';
-import 'package:saludsingapore/models/Products.dart';
 
 
 class DeleteButton extends StatelessWidget {
@@ -11,11 +11,11 @@ class DeleteButton extends StatelessWidget {
     @required this.data,
   }) : super(key: key);
 
-  final products data;
+  final Products data;
 
   @override
   Widget build(BuildContext context) {
-    final linksCollection = Provider.of<CollectionReference>(context);
+    final linksCollection = Provider.of<ProductCollection>(context);
     void _showDeleteDialog() {
       showDialog(
         context: context,
@@ -26,7 +26,7 @@ class DeleteButton extends StatelessWidget {
             FlatButton(
               color: Colors.redAccent,
               onPressed: () {
-                linksCollection.document(data.documentId).delete();
+                linksCollection.collection.document(data.documentId).delete();
                 Navigator.of(context).pop();
               },
               child: Text('Delete'),

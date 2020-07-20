@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
-class products {
+class Cart {
 
   final String text;
   final String img;
@@ -10,7 +9,7 @@ class products {
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  const products({
+  const Cart({
     this.text,
     this.img,
     this.price,
@@ -20,33 +19,33 @@ class products {
 
   @override
   String toString() {
-    return 'products{text: $text, img: $img, price: $price, documentId: $documentId}';
+    return 'Cart{text: $text, img: $img, price: $price, documentId: $documentId}';
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is products &&
-          runtimeType == other.runtimeType &&
-          text == other.text &&
-          img == other.img &&
-          price == other.price &&
-          documentId == other.documentId);
+          (other is Cart &&
+              runtimeType == other.runtimeType &&
+              text == other.text &&
+              img == other.img &&
+              price == other.price &&
+              documentId == other.documentId);
 
   @override
   int get hashCode =>
       text.hashCode ^ img.hashCode ^ price.hashCode ^ documentId.hashCode;
 
-  factory products.fromMap(Map<String, dynamic> map) {
-    return new products(
+  factory Cart.fromMap(Map<String, dynamic> map) {
+    return new Cart(
       text: map['text'] as String,
       img: map['img'] as String,
       price: map['price'] as String,
     );
   }
 
-  factory products.fromDocument(DocumentSnapshot document) {
-    return new products(
+  factory Cart.fromDocument(DocumentSnapshot document) {
+    return new Cart(
       text: document['text'] as String,
       img: document['img'] as String,
       price: document['price'] as String,
