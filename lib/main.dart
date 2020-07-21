@@ -5,6 +5,8 @@ import 'package:saludsingapore/helpers/export_helper.dart';
 import 'package:saludsingapore/models/export_models.dart';
 import 'package:saludsingapore/not_found_page.dart';
 import 'package:saludsingapore/pages/export_pages.dart';
+import 'package:saludsingapore/payment/existing_cards.dart';
+import 'package:saludsingapore/payment/payment_method.dart';
 import 'package:saludsingapore/seller_settings/seller_settings.dart';
 import 'package:provider/provider.dart';
 
@@ -20,9 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final products = ProductCollection().collection.snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) => Products.fromDocument(doc)).toList();
+      return snapshot.documents
+          .map((doc) => Products.fromDocument(doc))
+          .toList();
     });
     return MultiProvider(
       providers: [
@@ -59,6 +62,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/userSettings': (context) => userSettingsPage(),
           '/sellerSettings': (context) => sellerSettingsPage(),
+          '/paymentmethod': (context) => HomePage(),
+          '/existing-cards': (context) => ExistingCardsPage()
         },
       ),
     );
@@ -75,10 +80,10 @@ class AuthWidget extends StatelessWidget {
     final notLoggedInUserGoToLogin = home == '/login' && !isUserLoggedIn;
     final notLoggedInUserGoToRegister = home == '/register' && !isUserLoggedIn;
 
-    if (home == '/') {
-      return LoginPage();
-    } else if (isUserLoggedIn) {
+    if (isUserLoggedIn) {
       return ShoppingHomePage();
+    } else if (home == '/') {
+      return LoginPage();
     } else if (notLoggedInUserGoToLogin || notLoggedInUserGoToSettings) {
       return LoginPage();
     } else if (notLoggedInUserGoToRegister) {

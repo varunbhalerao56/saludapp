@@ -99,7 +99,7 @@ class RegisterPage extends StatelessWidget {
                                 final userId = authResult.user.uid;
                                 Firestore.instance
                                     .document('user/$userId')
-                                    .setData({'name': name, 'address': address, 'email': email, 'seller' : 'buyer'});
+                                    .setData({'id' : userId, 'name': name, 'address': address, 'email': email, 'seller' : 'buyer'});
                                 Navigator.of(context).pushNamed('/home');
                               }).catchError((error) =>
                                   showErrorDialog(context, error));

@@ -6,22 +6,25 @@ class User {
   final String address;
   final String id;
   final String seller;
+  final String customer_id;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  const User({
+  const User(
+   {
     this.name,
     this.email,
     this.address,
     this.id,
     this.seller,
+     this.customer_id,
   });
 
 
 
   @override
   String toString() {
-    return 'User{name: $name, email: $email, address: $address, id: $id, seller: $seller}';
+    return 'User{name: $name, email: $email, address: $address, id: $id, seller: $seller,customer_id:$customer_id}';
   }
 
   @override
@@ -33,7 +36,9 @@ class User {
               email == other.email &&
               address == other.address &&
               id == other.id &&
-              seller == other.seller);
+
+              seller == other.seller &&
+              customer_id == other.customer_id);
 
   @override
   int get hashCode =>
@@ -41,7 +46,8 @@ class User {
       email.hashCode ^
       address.hashCode ^
       id.hashCode ^
-      seller.hashCode;
+      seller.hashCode^
+      customer_id.hashCode;
 
   factory User.fromDocument(DocumentSnapshot document) {
     return new User(
@@ -49,6 +55,7 @@ class User {
       email: document.data['email'] as String,
       address: document.data['address'] as String,
       id: document.documentID,
+      customer_id: document['customer_id'] as String,
       seller: document['seller'] as String,
     );
   }
@@ -61,6 +68,7 @@ class User {
       'address': this.address,
       'id': this.id,
       'seller': this.seller,
+      'customer_id': this.customer_id
     } as Map<String, dynamic>;
   }
 

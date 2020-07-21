@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:saludsingapore/helpers/show_error.dart';
 import 'package:saludsingapore/models/export_models.dart';
 import 'package:saludsingapore/main.dart';
+import 'package:saludsingapore/payment/checkout_area.dart';
 import 'package:saludsingapore/user_settings/user_settings.dart';
 
 class ShoppingHomePage extends StatelessWidget {
@@ -74,7 +78,7 @@ class product_app_bar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    user.email,
+                    'yo',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -82,6 +86,17 @@ class product_app_bar extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
+                FlatButton.icon(
+                  icon: Icon(Icons.exit_to_app),
+                  label: Text('Logout'),
+                  onPressed: () {
+                    FirebaseAuth.instance
+                        .signOut()
+                        .then((value) =>
+                        Navigator.of(context).popAndPushNamed('/login'))
+                        .catchError((error) => showErrorDialog(context, error));
+                  },
+                ),
                 IconButton(
                   icon: Icon(
                     Icons.supervised_user_circle,
@@ -91,12 +106,12 @@ class product_app_bar extends StatelessWidget {
                     if(user.seller == 'buyer' || user.seller == '')
                       {
                         Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                          return userSettingsPage(user: user,);
+                          return  PaymentScreen(user,Firestore.instance);
                         }));
                       }
                     else if (user.seller == 'seller')
                       {
-                        Navigator.of(context).pushNamed('/sellerSettings');
+                        Navigator.of(context).pushNamed('/paymentmethod');
                       }
                   },
                 )
