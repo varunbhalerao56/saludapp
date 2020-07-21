@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858590556620",
+    "firebase_url": "https://saludapp-63b42.firebaseio.com",
+    "project_id": "saludapp-63b42",
+    "storage_bucket": "saludapp-63b42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858590556620:android:c32e838137cd341288ad69",
+        "android_client_info": {
+          "package_name": "com.saludsingapore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858590556620-fv46bsongo1to3vu4n84ln2a04sasp60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saludsingapore",
+            "certificate_hash": "0abdc5007af350c41b0ae8dbfd48734695e7988f"
+          }
+        },
+        {
+          "client_id": "858590556620-q7vvbbb9piu8eb7uk5fnof7ttu4077fb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDF4pWv1D_d1Pf8Sl9wqxBVDZn-Pq8gs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858590556620-q7vvbbb9piu8eb7uk5fnof7ttu4077fb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
