@@ -4,7 +4,6 @@ import 'package:saludsingapore/helpers/export_helper.dart';
 import 'package:saludsingapore/models/export_models.dart';
 import 'package:provider/provider.dart';
 
-
 class DeleteButton extends StatelessWidget {
   const DeleteButton({
     Key key,
@@ -15,18 +14,19 @@ class DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final linksCollection = Provider.of<ProductCollection>(context);
+    final productCollection = Provider.of<ProductCollection>(context);
     void _showDeleteDialog() {
       showDialog(
         context: context,
         child: AlertDialog(
-          title: Text('Are you sure you want to delete ${data.text} - product?'),
+          title: Text(
+              'Are you sure you want to delete ${data.productName} - product?'),
           content: Text('Deleted products cant be retrived'),
           actions: <Widget>[
             FlatButton(
               color: Colors.redAccent,
               onPressed: () {
-                linksCollection.collection.document(data.documentId).delete();
+                productCollection.collection.document(data.documentId).delete();
                 Navigator.of(context).pop();
               },
               child: Text('Delete'),
@@ -35,10 +35,10 @@ class DeleteButton extends StatelessWidget {
         ),
       );
     }
+
     return IconButton(
       icon: Icon(Icons.delete),
       onPressed: _showDeleteDialog,
     );
   }
 }
-
