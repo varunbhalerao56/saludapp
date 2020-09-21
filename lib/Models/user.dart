@@ -56,14 +56,14 @@ class User extends Model {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is User &&
-              runtimeType == other.runtimeType &&
-              displayName == other.displayName &&
-              email == other.email &&
-              address == other.address &&
-              id == other.id &&
-              seller == other.seller &&
-              stripeId == other.stripeId);
+      (other is User &&
+          runtimeType == other.runtimeType &&
+          displayName == other.displayName &&
+          email == other.email &&
+          address == other.address &&
+          id == other.id &&
+          seller == other.seller &&
+          stripeId == other.stripeId);
 
   @override
   int get hashCode =>
@@ -87,7 +87,6 @@ class User extends Model {
     } as Map<String, dynamic>;
   }
 
-
   factory User.fromDocument(DocumentSnapshot document) {
     return new User(
       displayName: document.data['displayName'] as String,
@@ -100,52 +99,48 @@ class User extends Model {
   }
 
   User.fromMap(Map<String, dynamic> map)
-      :
-        displayName= map['displayName'] as String,
-        email= map['email'] as String,
-        address= map['address'] as String,
-        id= map['id'] as String,
-        seller= map['seller'] as String,
-        stripeId= map['stripeId'] as String,
-        cart= map['cart'] as List<Products>,
+      : displayName = map['displayName'] as String,
+        email = map['email'] as String,
+        address = map['address'] as String,
+        id = map['id'] as String,
+        seller = map['seller'] as String,
+        stripeId = map['stripeId'] as String,
+        cart = map['cart'] as List<Products>,
         orders = map['orders'].map((order) {
           return Order.fromMap(order);
         }).toList(),
-        totalCartValue= map['totalCartValue'] as double;
-
+        totalCartValue = map['totalCartValue'] as double;
 
   void ReadNestedData1() {
     User user;
-    Firestore.instance.collection("user").document(id).get().then((
-        docSnapshot) =>
-    {
-      user = User.fromMap(docSnapshot.data),
-      user.orders.forEach((order) {
-        Order orderInst = order as Order;
+    Firestore.instance
+        .collection("user")
+        .document(id)
+        .get()
+        .then((docSnapshot) => {
+              user = User.fromMap(docSnapshot.data),
+              user.orders.forEach((order) {
+                Order orderInst = order as Order;
 
-        print("Order :" + orderInst.itemsOrdered.toString());
-      })
-    });
+                print("Order :" + orderInst.itemsOrdered.toString());
+              })
+            });
   }
 
   void ReadNestedData() {
-    Firestore.instance.collection("user")
-        .document(id)
-        .get().then((docSnapshot) =>
-    {
-      print(
-          "Orders: " + docSnapshot.data["orders"][0]["itemsOrdered"].toString())
-    });
+    Firestore.instance.collection("user").document(id).get().then(
+        (docSnapshot) => {
+              print("Orders: " +
+                  docSnapshot.data["orders"][0]["itemsOrdered"].toString())
+            });
   }
 
   void AddObjectToArray(String name) {
     Order order = Order('1awdasascdwqsssss', name, 'sss');
-    Firestore.instance.collection("user")
-        .document(id).updateData({
+    Firestore.instance.collection("user").document(id).updateData({
       "orders": FieldValue.arrayUnion([order.toMap()])
     });
   }
-
 
   void addProduct(product) {
     int index = cart.indexWhere((i) => i.productName == product.productName);
@@ -170,8 +165,7 @@ class User extends Model {
   void updateProduct(product, qty) {
     int index = cart.indexWhere((i) => i.productName == product.productName);
     cart[index].qty = qty;
-    if (cart[index].qty == 0)
-      removeProduct(product);
+    if (cart[index].qty == 0) removeProduct(product);
 
     calculateTotal();
     notifyListeners();
@@ -191,18 +185,15 @@ class User extends Model {
     });
   }
 
-  Future<void> currentUserChatroomOrderStatus(String orderId,
-      String status,
-      String id) async {
-    DocumentReference docRef = Firestore.instance
-        .collection("user")
-        .document(id);
+  Future<void> currentUserChatroomOrderStatus(
+      String orderId, String status, String id) async {
+    DocumentReference docRef =
+        Firestore.instance.collection("user").document(id);
 
     DocumentSnapshot docSnapshot = await docRef.get();
     Map<String, dynamic> docData = docSnapshot.data;
 
-    List<Map<String, dynamic>> userOrder =
-    (docData["orders"] as List<dynamic>)
+    List<Map<String, dynamic>> userOrder = (docData["orders"] as List<dynamic>)
         .map((order) => Map<String, dynamic>.from(order))
         .toList();
 
